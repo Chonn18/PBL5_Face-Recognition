@@ -7,25 +7,25 @@ import androidx.annotation.NonNull;
 
 public class Student implements Parcelable {
     private Integer id;
-    private String time;
+    private Integer classid;
     private String name;
     private String date;
     private String avatar;
-    private Boolean sex;
+    private String sex;
 
 
-    public Student(Integer id, String time, String name, String date, String avatar, Boolean sex) {
+    public Student(Integer id, Integer time, String name, String date, String avatar, String sex) {
         this.id = id;
-        this.time = time;
+        this.classid = time;
         this.name = name;
         this.date = date;
         this.avatar = avatar;
         this.sex = sex;
     }
 
-    public Student(Integer id, String time, String name, String date, Boolean sex) {
+    public Student(Integer id, Integer time, String name, String date, String sex) {
         this.id = id;
-        this.time = time;
+        this.classid = time;
         this.name = name;
         this.date = date;
         this.sex = sex;
@@ -43,12 +43,12 @@ public class Student implements Parcelable {
         this.id = id;
     }
 
-    public String getTime() {
-        return time;
+    public Integer getClassid() {
+        return classid;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setClassid(Integer classid) {
+        this.classid = classid;
     }
 
     public String getName() {
@@ -75,11 +75,11 @@ public class Student implements Parcelable {
         this.avatar = avatar;
     }
 
-    public Boolean getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Boolean sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
@@ -88,13 +88,13 @@ public class Student implements Parcelable {
             id = null;
         } else {
             id = in.readInt();
+            classid = in.readInt();
         }
-        time = in.readString();
+
         name = in.readString();
         date = in.readString();
         avatar = in.readString();
-        byte tmpSex = in.readByte();
-        sex = tmpSex == 0 ? null : tmpSex == 1;
+        sex = in.readString();
     }
 
     public static final Creator<Student> CREATOR = new Creator<Student>() {
@@ -122,10 +122,10 @@ public class Student implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(id);
         }
-        dest.writeString(time);
+        dest.writeString(String.valueOf(classid));
         dest.writeString(name);
         dest.writeString(date);
         dest.writeString(avatar);
-        dest.writeByte((byte) (sex == null ? 0 : sex ? 1 : 2));
+        dest.writeString(sex);
     }
 }

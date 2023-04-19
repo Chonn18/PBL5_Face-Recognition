@@ -22,18 +22,11 @@
                 android:layout_height="wrap_content"
                 android:text="Class"
                 android:textSize="48sp"
-                android:layout_marginLeft="100dp"
+                android:gravity="center"
+                android:layout_marginLeft="130dp"
                 android:textColor="#2E425A"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
-
-            <ImageView
-                android:id="@+id/img_user"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="30dp"
-                android:layout_gravity="center"
-                android:background="@color/white"/>
 
         </LinearLayout>
 
