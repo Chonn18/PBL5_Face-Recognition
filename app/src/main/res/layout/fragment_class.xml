@@ -8,7 +8,7 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:background="@color/login"
-        tools:context=".View.HomeFragment">
+        tools:context=".View.ClassFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Class"
+                android:text="Student"
                 android:textSize="48sp"
                 android:layout_marginLeft="100dp"
                 android:textColor="#2E425A"
@@ -40,20 +40,20 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_class"
+            android:id="@+id/rv_student"
             android:layout_width="match_parent"
             android:layout_height="410dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_history"
+            android:id="@+id/btn_add"
             android:layout_width="350dp"
             android:layout_height="70dp"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="#2E425A"
             android:layout_gravity="center"
-            android:text="History check in"
+            android:text="Add student"
             android:textSize="16sp"
             android:textStyle="bold"
             app:cornerRadius="25dp"/>

@@ -1,4 +1,4 @@
-package com.project.pbl5_mobile.Model;
+package com.project.pbl5_mobile.Model.Entity;
 
 
 import android.os.Parcel;
