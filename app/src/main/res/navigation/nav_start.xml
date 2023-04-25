@@ -15,11 +15,6 @@
             app:destination="@id/signInFragment" />
     </fragment>
     <fragment
-        android:id="@+id/historyFragment"
-        android:name="com.project.pbl5_mobile.View.HistoryFragment"
-        android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
-    <fragment
         android:id="@+id/signInFragment"
         android:name="com.project.pbl5_mobile.View.SignInFragment"
         android:label="fragment_sign_in"
@@ -34,15 +29,20 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_historyFragment"
-            app:destination="@id/historyFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_classFragment"
             app:destination="@id/classFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_history1Fragment"
+            app:destination="@id/history1Fragment" />
     </fragment>
     <fragment
         android:id="@+id/classFragment"
         android:name="com.project.pbl5_mobile.View.ClassFragment"
         android:label="fragment_class"
         tools:layout="@layout/fragment_class" />
+    <fragment
+        android:id="@+id/history1Fragment"
+        android:name="com.project.pbl5_mobile.View.History1Fragment"
+        android:label="fragment_history1"
+        tools:layout="@layout/fragment_history1" />
 </navigation>

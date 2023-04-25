@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 public class Student implements Parcelable {
     private Integer id;
-    private Integer classid;
+    private Integer idclass;
     private String name;
     private String date;
     private String avatar;
@@ -16,7 +16,7 @@ public class Student implements Parcelable {
 
     public Student(Integer id, Integer time, String name, String date, String avatar, String sex) {
         this.id = id;
-        this.classid = time;
+        this.idclass = time;
         this.name = name;
         this.date = date;
         this.avatar = avatar;
@@ -25,7 +25,7 @@ public class Student implements Parcelable {
 
     public Student(Integer id, Integer time, String name, String date, String sex) {
         this.id = id;
-        this.classid = time;
+        this.idclass = time;
         this.name = name;
         this.date = date;
         this.sex = sex;
@@ -44,11 +44,11 @@ public class Student implements Parcelable {
     }
 
     public Integer getClassid() {
-        return classid;
+        return idclass;
     }
 
     public void setClassid(Integer classid) {
-        this.classid = classid;
+        this.idclass = classid;
     }
 
     public String getName() {
@@ -88,7 +88,7 @@ public class Student implements Parcelable {
             id = null;
         } else {
             id = in.readInt();
-            classid = in.readInt();
+            idclass = in.readInt();
         }
 
         name = in.readString();
@@ -122,7 +122,7 @@ public class Student implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeInt(id);
         }
-        dest.writeString(String.valueOf(classid));
+        dest.writeString(String.valueOf(idclass));
         dest.writeString(name);
         dest.writeString(date);
         dest.writeString(avatar);

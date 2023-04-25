@@ -1,6 +1,8 @@
 package com.project.pbl5_mobile.Model.Entity;
 
-public class Class {
+import java.io.Serializable;
+
+public class Class implements Serializable {
     int idclass;
     String classname;
 
@@ -23,5 +25,8 @@ public class Class {
     public Class(int idclass, String classname) {
         this.idclass = idclass;
         this.classname = classname;
+    }
+
+    public Class( ) {
     }
 }

@@ -8,32 +8,38 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:background="@color/login"
-        tools:context=".View.ClassFragment">
+        tools:context=".View.ClassFragment"
+        android:id="@+id/classFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Class"-->
+<!--                android:textSize="48sp"-->
+<!--                android:layout_marginLeft="100dp"-->
+<!--                android:textColor="#2E425A"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:textStyle="bold"/>-->
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_classname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Student"
+                android:text="name"
                 android:textSize="48sp"
-                android:layout_marginLeft="100dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="#2E425A"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>
-
-            <ImageView
-                android:id="@+id/img_user"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="30dp"
-                android:layout_gravity="center"
-                android:background="@color/white"/>
 
         </LinearLayout>
 

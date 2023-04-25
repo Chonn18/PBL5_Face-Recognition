@@ -58,47 +58,29 @@ public class SignInFragment extends Fragment {
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = binding.edEmail.getText().toString();
-                String pass = binding.edPassword.getText().toString();
-                String email = String.valueOf(binding.edEmail.getText());
-                String password = String.valueOf(binding.edPassword.getText());
+                String name = String.valueOf(binding.edEmail.getText());
+                String pass = String.valueOf(binding.edPassword.getText());
+                String email = "duongvanchon18@gmail.com";
+                String password = "123456";
                 FirebaseAuth mAuth ;
                 mAuth = FirebaseAuth.getInstance();
                 if(name.isEmpty() || pass.isEmpty()){
                     Toast.makeText(getContext(),"Please Fill Out Application",Toast.LENGTH_SHORT).show();
                 }
-                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getContext(),"Log In Successful",
                                     Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(view).navigate(R.id.homeFragment);
-//                                Intent intent=new Intent(getContext(), MainActivity.class);
-//                                startActivity(intent);
                         }
                         else Toast.makeText(getContext(),"Failed",
                                 Toast.LENGTH_SHORT).show();
                     }
 
                 });
-//                else{
-//                    fAuth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<AuthResult> task) {
-//                            if(task.isSuccessful()){
-//                                Toast.makeText(getContext(),"Log In Successful",
-//                                        Toast.LENGTH_SHORT).show();
-//                                Navigation.findNavController(view).navigate(R.id.homeFragment);
-////                                Intent intent=new Intent(getContext(), MainActivity.class);
-////                                startActivity(intent);
-//                            }
-//                            else Toast.makeText(getContext(),"Failed",
-//                                    Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
 
-//                }
             }
         });
     }
