@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,11 +20,13 @@ import com.project.pbl5_mobile.Model.Entity.Class;
 import com.project.pbl5_mobile.Model.Entity.Student;
 import com.project.pbl5_mobile.Model.Helper.FirebaseClasses;
 import com.project.pbl5_mobile.Model.Helper.FirebaseStrudents;
+import com.project.pbl5_mobile.Model.Helper.IClickStudentListener;
 import com.project.pbl5_mobile.R;
 import com.project.pbl5_mobile.ViewModel.ClassAdapter;
 import com.project.pbl5_mobile.ViewModel.StudentAdapter;
 import com.project.pbl5_mobile.databinding.FragmentClassBinding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,17 +73,31 @@ public class ClassFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.tvClassname.setText(c.getClassname().toString());
-        String id = String.valueOf(c.getIdclass());
+        Integer id = (c.getIdclass());
 
         sList = new ArrayList<>();
         binding.rvStudent.setHasFixedSize(true);
         binding.rvStudent.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        sAdapter = new StudentAdapter(sList);
+        sAdapter = new StudentAdapter(sList, new IClickStudentListener() {
+            @Override
+            public void onclickStudent(Student student) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("student", (Serializable) student);
+                History1Fragment history1Fragment = new History1Fragment();
+                history1Fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainerView, history1Fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 //        sAdapter.notifyDataSetChanged();
         binding.rvStudent.setAdapter(sAdapter);
 
-
+        if(id==null){
+            Toast.makeText(getContext(),"idclass null",Toast.LENGTH_SHORT).show();
+        }
 
         FirebaseStrudents.getInstance().getStudentByClassid("Student",id).addOnCompleteListener(new OnCompleteListener<List<Student>>() {
             @Override
@@ -94,6 +111,18 @@ public class ClassFragment extends Fragment {
                 }
             }
         });
+//        FirebaseStrudents.getInstance().getAllStudent("Student").addOnCompleteListener(new OnCompleteListener<List<Student>>() {
+//            @Override
+//            public void onComplete(@NonNull Task<List<Student>> task) {
+//                if(task.isSuccessful()) {
+//                    sList.addAll(task.getResult());
+//                    sAdapter.notifyDataSetChanged();
+//                }
+//                else{
+//                    Exception ex = task.getException();
+//                }
+//            }
+//        });
 
 
 

@@ -72,27 +72,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.MyViewHolder
             public void onClick(View v) {
                 listener.onClickItem(classname);
 
-//
-//                String id = String.valueOf(classname.getIdclass());
-//                FirebaseStrudents.getInstance().getStudentByClassid("Student",id).addOnCompleteListener(new OnCompleteListener<List<Student>>() {
-//
-//
-//                    @Override
-//                    public void onComplete(@NonNull Task<List<Student>> task) {
-//                        if(task.isSuccessful()){
-//                            List<Student> students =task.getResult();
-//                            Bundle bundle = new Bundle();
-//                            bundle.putSerializable("Students", (Serializable) students);
-//                            ClassFragment createOrJoinFragment = new ClassFragment();
-//                            createOrJoinFragment.setArguments(bundle);
-//                            ((AppCompatActivity) mContext).getSupportFragmentManager().beginTransaction()
-//                                    .replace(R.id.classFragment, createOrJoinFragment)
-//                                    .addToBackStack(null)
-//                                    .commit();
-////                            Navigation.findNavController(v).navigate(R.id.classFragment);
-//                        }
-//                    }
-//                });
             }
         });
 

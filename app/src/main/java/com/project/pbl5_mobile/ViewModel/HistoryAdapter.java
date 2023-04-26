@@ -33,7 +33,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         User user = listUser.get(position);
-        holder.binding.tvId.setText(user.getId().toString());
+        if(user.getId()==null){
+            holder.binding.tvId.setText("null");
+        }
+        else holder.binding.tvId.setText(user.getId().toString());
+
         holder.binding.tvName.setText(user.getName());
         holder.binding.tvTime.setText(user.getTime());
         if(!user.getAvatar().isEmpty())

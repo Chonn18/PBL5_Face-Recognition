@@ -5,7 +5,9 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Student implements Parcelable {
+import java.io.Serializable;
+
+public class Student implements Parcelable, Serializable {
     private Integer id;
     private Integer idclass;
     private String name;

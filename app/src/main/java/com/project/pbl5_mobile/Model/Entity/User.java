@@ -10,6 +10,14 @@ public class User implements Parcelable {
     private String avatar;
     private Integer id;
 
+    public User(String time, String avatar) {
+        this.time = time;
+        this.avatar = avatar;
+        this.id = null;
+        this.name = "null";
+
+    }
+
     public Integer getId() {
         return id;
     }

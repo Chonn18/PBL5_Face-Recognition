@@ -53,4 +53,27 @@ public class FirebaseUsers {
         });
         return tcs.getTask();
     }
+
+    public Task<List<User>> getUsersByID(String path,int id) {
+        TaskCompletionSource<List<User>> tcs = new TaskCompletionSource<>();
+        ArrayList<User> users = new ArrayList<>();
+        mDatabase.getReference(path).orderByChild("id").equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    // Extract the topic information from each question
+                    User topic = userSnapshot.getValue(User.class);
+                    if (!users.contains(topic)) {
+                        users.add(topic);
+                    }
+                }
+                tcs.setResult(users);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                tcs.setException(error.toException());
+            }
+        });
+        return tcs.getTask();
+    }
 }

@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.project.pbl5_mobile.Model.Entity.Student;
 import com.project.pbl5_mobile.Model.Entity.User;
 import com.project.pbl5_mobile.Model.Helper.FirebaseUsers;
 import com.project.pbl5_mobile.R;
 import com.project.pbl5_mobile.ViewModel.HistoryAdapter;
 import com.project.pbl5_mobile.databinding.FragmentHistory1Binding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class History1Fragment extends Fragment {
     private FragmentHistory1Binding binding;
     private ArrayList<User> uList;
     private HistoryAdapter historyAdapter;
+
+    private Student s;
 
 
     public History1Fragment() {
@@ -47,6 +51,7 @@ public class History1Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            s = (Student) getArguments().getSerializable("student");
         }
     }
 
@@ -68,17 +73,37 @@ public class History1Fragment extends Fragment {
         historyAdapter = new HistoryAdapter(uList);
         binding.rvHistory.setAdapter(historyAdapter);
 
-        FirebaseUsers.getInstance().getAllUsers("Users").addOnCompleteListener(new OnCompleteListener<List<User>>() {
-            @Override
-            public void onComplete(@NonNull Task<List<User>> task) {
-                if(task.isSuccessful()) {
-                    uList.addAll(task.getResult());
-                    historyAdapter.notifyDataSetChanged();
+        if(s==null){
+            FirebaseUsers.getInstance().getAllUsers("Users").addOnCompleteListener(new OnCompleteListener<List<User>>() {
+                @Override
+                public void onComplete(@NonNull Task<List<User>> task) {
+                    if(task.isSuccessful()) {
+                        uList.addAll(task.getResult());
+                        historyAdapter.notifyDataSetChanged();
+                    }
+                    else{
+                        Exception ex = task.getException();
+                    }
                 }
-                else{
-                    Exception ex = task.getException();
+            });
+        }
+        else{
+            int id = s.getId();
+            FirebaseUsers.getInstance().getUsersByID("Users",id).addOnCompleteListener(new OnCompleteListener<List<User>>() {
+                @Override
+                public void onComplete(@NonNull Task<List<User>> task) {
+                    if(task.isSuccessful()) {
+                        uList.addAll(task.getResult());
+                        historyAdapter.notifyDataSetChanged();
+                    }
+                    else{
+                        Exception ex = task.getException();
+                    }
                 }
-            }
-        });
+            });
+        }
+
+
+
     }
 }
