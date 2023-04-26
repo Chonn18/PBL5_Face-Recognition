@@ -11,11 +11,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.pbl5_mobile.Model.Entity.Student;
+import com.project.pbl5_mobile.Model.Entity.User;
 import com.project.pbl5_mobile.Model.Helper.IClickStudentListener;
 import com.project.pbl5_mobile.R;
 import com.project.pbl5_mobile.databinding.StudentItemBinding;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentAdapter extends  RecyclerView.Adapter<StudentAdapter.MyViewHolder>{
@@ -72,6 +74,12 @@ public class StudentAdapter extends  RecyclerView.Adapter<StudentAdapter.MyViewH
             this.binding = itemBinding;
         }
 
+    }
+
+    public void updateList(ArrayList<Student> newList){
+        liststudent = new ArrayList<>();
+        liststudent.addAll(newList);
+        notifyDataSetChanged();
     }
 
 }

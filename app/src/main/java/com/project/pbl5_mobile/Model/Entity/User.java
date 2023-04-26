@@ -18,6 +18,13 @@ public class User implements Parcelable {
 
     }
 
+    public User(String time, String name, String avatar, Integer id) {
+        this.time = time;
+        this.name = name;
+        this.avatar = avatar;
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

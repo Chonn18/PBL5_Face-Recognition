@@ -34,11 +34,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         User user = listUser.get(position);
         if(user.getId()==null){
-            holder.binding.tvId.setText("null");
+            holder.binding.tvId.setText("Unknow");
         }
         else holder.binding.tvId.setText(user.getId().toString());
-
-        holder.binding.tvName.setText(user.getName());
+        if(user.getName()==null){
+            holder.binding.tvName.setText("Unknow");
+        }
+        else holder.binding.tvName.setText(user.getName());
         holder.binding.tvTime.setText(user.getTime());
         if(!user.getAvatar().isEmpty())
             Picasso.get().load(user.getAvatar()).into(holder.binding.ivPerson);
@@ -91,5 +93,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public  void setFilterList(List<User> filterList){
+        this.listUser = filterList;
+        notifyDataSetChanged();
     }
 }

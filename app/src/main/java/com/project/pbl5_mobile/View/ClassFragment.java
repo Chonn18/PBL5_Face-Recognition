@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.project.pbl5_mobile.Model.Entity.Class;
 import com.project.pbl5_mobile.Model.Entity.Student;
+import com.project.pbl5_mobile.Model.Entity.User;
 import com.project.pbl5_mobile.Model.Helper.FirebaseClasses;
 import com.project.pbl5_mobile.Model.Helper.FirebaseStrudents;
 import com.project.pbl5_mobile.Model.Helper.IClickStudentListener;
@@ -111,20 +113,43 @@ public class ClassFragment extends Fragment {
                 }
             }
         });
-//        FirebaseStrudents.getInstance().getAllStudent("Student").addOnCompleteListener(new OnCompleteListener<List<Student>>() {
-//            @Override
-//            public void onComplete(@NonNull Task<List<Student>> task) {
-//                if(task.isSuccessful()) {
-//                    sList.addAll(task.getResult());
-//                    sAdapter.notifyDataSetChanged();
-//                }
-//                else{
-//                    Exception ex = task.getException();
-//                }
+
+
+        binding.searchView.clearFocus();
+
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+
+
+
+    }
+
+    private void filterList(String Text) {
+        ArrayList<Student> filterList = new ArrayList<>();
+        if(sList.isEmpty())
+            Toast.makeText(getContext(),"No data found",Toast.LENGTH_SHORT).show();
+        for ( Student u : sList){
+//            if(u.getName() == null){
+////                return;
 //            }
-//        });
-
-
-
+            if(u.getName().toLowerCase().contains(Text.toLowerCase())){
+                filterList.add(u);
+            }
+        }
+        if(filterList.isEmpty()){
+            Toast.makeText(getContext(),"No data found",Toast.LENGTH_SHORT).show();
+        }else{
+            sAdapter.updateList(filterList);
+        }
     }
 }

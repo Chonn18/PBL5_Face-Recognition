@@ -11,6 +11,15 @@
         tools:context=".View.ClassFragment"
         android:id="@+id/classFragment">
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="381dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:queryHint="Search here ..."
+            android:background="@drawable/search_view_bg"
+            app:iconifiedByDefault="false"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
