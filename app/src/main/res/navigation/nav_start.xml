@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_homeFragment_to_history1Fragment"
             app:destination="@id/history1Fragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/classFragment"
@@ -45,4 +48,9 @@
         android:name="com.project.pbl5_mobile.View.History1Fragment"
         android:label="fragment_history1"
         tools:layout="@layout/fragment_history1" />
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.project.pbl5_mobile.View.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>
