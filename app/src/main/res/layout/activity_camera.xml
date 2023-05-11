@@ -42,7 +42,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_take_photo"
             android:layout_width="250dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="#2E425A"
@@ -54,7 +54,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_upload"
             android:layout_width="250dp"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="#2E425A"
