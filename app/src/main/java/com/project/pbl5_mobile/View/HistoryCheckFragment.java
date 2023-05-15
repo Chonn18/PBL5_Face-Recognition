@@ -87,11 +87,12 @@ public class HistoryCheckFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Navigation.findNavController(view).navigate(R.id.homeFragment);
+//            FirebaseDatabase mDatabase;
+//            mDatabase = FirebaseDatabase.getInstance();
+//            mDatabase.getReference("check").setValue(false);
         }
     });
 
-        FirebaseDatabase mDatabase;
-        mDatabase = FirebaseDatabase.getInstance();
-        mDatabase.getReference("check").setValue(false);
+
     }
 }

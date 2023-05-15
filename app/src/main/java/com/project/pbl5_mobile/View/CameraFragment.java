@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -76,6 +78,8 @@ public class CameraFragment extends Fragment {
         return binding.getRoot();
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -112,7 +116,7 @@ public class CameraFragment extends Fragment {
 //                Socket socket = null;
 //                DataOutputStream dos = null;
 //                try {
-//                    socket = new Socket("192.168.1.5", 9999);
+//                    socket = new Socket("192.168.43.209", 9999);
 //                    dos = new DataOutputStream(socket.getOutputStream());
 //                    dos.write(data);
 //                    dos.close();
@@ -120,7 +124,7 @@ public class CameraFragment extends Fragment {
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
-
+                new NetworkTask().execute();
 
                 // đọc ảnh từ tệp và gửi tới Server Python
 //                File file = new File("C:\\Users\\Bao Quoc\\eclipse-workspace\\tmp2\\src\\tmp2\\tmp2.jpg");
@@ -166,7 +170,7 @@ public class CameraFragment extends Fragment {
                                 mDatabase.getReference("check").setValue(true);
                                 CheckNow userCheck = new CheckNow(url,time);
                                 mDatabase.getReference("CheckNow").setValue(userCheck);
-                                Navigation.findNavController(view).navigate(R.id.historyCheckFragment);
+//                                Navigation.findNavController(view).navigate(R.id.historyCheckFragment);
                             }
                         });
 //                        Task<Uri> uri = mountainsRef.getDownloadUrl();
@@ -181,7 +185,23 @@ public class CameraFragment extends Fragment {
 
     }
 
-
+    private class NetworkTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                String s = "check";
+                byte[] data = s.getBytes(StandardCharsets.UTF_8);
+                Socket socket = new Socket("10.10.30.11", 9999);
+                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                dos.write(data);
+                dos.close();
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -208,3 +228,14 @@ public class CameraFragment extends Fragment {
         return currentTime;
     }
 }
+
+
+
+//    // Trong onClick()
+//    public void onClick(View view) {
+//        // Thực hiện các hoạt động chuẩn bị trước
+//
+//        // Gọi AsyncTask để thực hiện hoạt động mạng
+//        MyAsyncTask myAsyncTask = new MyAsyncTask();
+//        myAsyncTask.execute();
+//    }
