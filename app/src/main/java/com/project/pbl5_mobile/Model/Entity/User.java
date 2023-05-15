@@ -4,19 +4,47 @@ package com.project.pbl5_mobile.Model.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.project.pbl5_mobile.Model.Helper.FirebaseStrudents;
+
 public class User implements Parcelable {
-    private String time;
-    private String name;
+    public String time;
+    public String name;
     private String avatar;
     private Integer id;
 
     public User(String time, String avatar) {
         this.time = time;
         this.avatar = avatar;
-        this.id = null;
-        this.name = "null";
+//        this.id = null;
+//        this.name = "null";
 
     }
+
+    public User(String time, String avatar, Integer id) {
+        this.time = time;
+        this.avatar = avatar;
+        this.id = id;
+        FirebaseStrudents firebaseStrudents = new FirebaseStrudents();
+        firebaseStrudents.getStudentByID(id.toString(), new FirebaseStrudents.StudentCallback() {
+            @Override
+            public void onReceived(Student student) {
+                if (student.getName() != null) {
+                    // Đã tìm thấy sinh viên và nhận được thông tin
+                    String studentName = student.getName();
+                    // Xử lý thông tin sinh viên
+                    User.this.name = studentName;
+                } else {
+                    // Không tìm thấy sinh viên với id tương ứng
+                    // Xử lý trường hợp này
+                }
+            }
+        });
+    }
+
 
     public User(String time, String name, String avatar, Integer id) {
         this.time = time;

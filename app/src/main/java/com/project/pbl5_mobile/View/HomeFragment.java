@@ -69,6 +69,24 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+//        FirebaseDatabase mDatabase;
+//        mDatabase = FirebaseDatabase.getInstance();
+//        mDatabase.getReference("check").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                Boolean isChecked = snapshot.getValue(Boolean.class);
+//                if(isChecked){
+//                    Navigation.findNavController(view).navigate(R.id.historyCheckFragment);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
+
         cList = new ArrayList<>();
         binding.rvClass.setHasFixedSize(true);
         binding.rvClass.setLayoutManager(new LinearLayoutManager(getActivity()));

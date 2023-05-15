@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.project.pbl5_mobile.Model.Entity.Student;
 
@@ -20,7 +19,7 @@ public class FirebaseStrudents {
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
 
-    private FirebaseStrudents(){
+    public FirebaseStrudents(){
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
     }
@@ -99,37 +98,68 @@ public class FirebaseStrudents {
         });
         return tcs.getTask();
     }
-    public Task<List<Student>> getStudentByID(String id)
-    {
-        TaskCompletionSource<List<Student>> tcs = new TaskCompletionSource<>();
-        ArrayList<Student> students = new ArrayList<>();
-        Query query = mDatabase.getReference("Student").orderByChild("idclass").equalTo(id);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getStudentByID(String id, final StudentCallback callback) {
+        mDatabase.getReference("Student").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    for (DataSnapshot questionSnapshot : snapshot.getChildren()) {
-                        // Extract the topic information from each question
-                        Student topic = questionSnapshot.getValue(Student.class);
-
-                        if (!students.contains(topic)) {
-                            students.add(topic);
-                        }
-                    }
-                    tcs.setResult(students);
-
+                if (snapshot.exists()) {
+                    Student s = snapshot.getValue(Student.class);
+                    callback.onReceived(s);
                 }
-
+                else{
+                    callback.onReceived(new Student());
+                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                tcs.setException(error.toException());
+
             }
         });
-        return tcs.getTask();
     }
+//    public void getstudentById(int id, final FirebaseStrudents.StudentCallback callback){
+//        mDatabase.getReference("Student").orderByChild("id").equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    Student s = snapshot.getValue(Student.class);
+//                    callback.onReceived(s);
+//                }
+//                else{
+//                    callback.onReceived(new Student());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
+public void getstudentById(int id, final FirebaseStrudents.StudentCallback callback) {
+    mDatabase.getReference("Student").orderByChild("id").equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot snapshot) {
+            if (snapshot.exists()) {
+                for (DataSnapshot childSnapshot : snapshot.getChildren()) {
+                    Student s = childSnapshot.getValue(Student.class);
+                    callback.onReceived(s);
+                    return; // Kết thúc vòng lặp sau khi lấy giá trị đầu tiên
+                }
+            } else {
+                callback.onReceived(new Student());
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
+}
+
 
     public interface StudentCallback {
-        void onUserReceived(Student student);
+        void onReceived(Student student);
     }
     }

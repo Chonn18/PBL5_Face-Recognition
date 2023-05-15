@@ -7,7 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.project.pbl5_mobile.Model.Entity.Student;
 import com.project.pbl5_mobile.Model.Entity.User;
+import com.project.pbl5_mobile.Model.Helper.FirebaseStrudents;
 import com.project.pbl5_mobile.R;
 import com.project.pbl5_mobile.databinding.HistoryItemBinding;
 import com.squareup.picasso.Picasso;
@@ -34,13 +38,33 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         User user = listUser.get(position);
         if(user.getId()==null){
-            holder.binding.tvId.setText("Unknow");
+            holder.binding.tvId.setText("Unknown");
         }
         else holder.binding.tvId.setText(user.getId().toString());
         if(user.getName()==null){
-            holder.binding.tvName.setText("Unknow");
+            if(user.getId()!=null) {
+                FirebaseStrudents.getInstance().getstudentById(user.getId(), new FirebaseStrudents.StudentCallback() {
+                    @Override
+                    public void onReceived(Student student) {
+                        if (student.getName() != null) {
+                            // Đã tìm thấy sinh viên và nhận được thông tin
+                            String studentName = student.getName();
+                            // Xử lý thông tin sinh viên
+                            user.name = studentName;
+                            holder.binding.tvName.setText(studentName);
+                        } else {
+                            // Không tìm thấy sinh viên với id tương ứng
+                            // Xử lý trường hợp này
+                            holder.binding.tvName.setText("id error");
+                        }
+                    }
+                });
+
+            }else
+                holder.binding.tvName.setText("Unknown");
         }
-        else holder.binding.tvName.setText(user.getName());
+        else
+            holder.binding.tvName.setText(user.getName());
         holder.binding.tvTime.setText(user.getTime());
         if(!user.getAvatar().isEmpty())
             Picasso.get().load(user.getAvatar()).into(holder.binding.ivPerson);
@@ -54,30 +78,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
         return listUser.size();
     }
 
-//    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        private ImageView ivHistoryImage;
-//        private TextView tvName, tvTime;
-//        OnPersonListener onPersonListener;
-//        public ViewHolder(View view) {
-//            super(view);
-//            // Define click listener for the ViewHolder's View
-//            ivHistoryImage = view.findViewById(R.id.iv_person);
-//            tvName = view.findViewById(R.id.tv_name);
-//            tvTime = view.findViewById(R.id.tv_time);
-//            this.onPersonListener=onPersonListener;
-//            view.setOnClickListener(this);
-//        }
-//        @Override
-//        public void onClick(View view) {
-//            onPersonListener.onPersonClick(getAdapterPosition());
-//
-//        }
-
-
-//        public TextView getTextView() {
-//            return textView;
-//        }
-//    }
     public interface OnPersonListener{
         void onPersonClick(int position);
     }

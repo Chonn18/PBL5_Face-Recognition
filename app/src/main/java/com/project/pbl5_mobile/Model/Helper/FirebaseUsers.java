@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.pbl5_mobile.Model.Entity.User;
+import com.project.pbl5_mobile.Model.Entity.UserCheck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,30 @@ public class FirebaseUsers {
                     }
                 }
                 tcs.setResult(users);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                tcs.setException(error.toException());
+            }
+        });
+        return tcs.getTask();
+    }
+
+
+    public Task<List<UserCheck>> getAllUserCheck(String path) {
+        TaskCompletionSource<List<UserCheck>> tcs = new TaskCompletionSource<>();
+        ArrayList<UserCheck> userChecks = new ArrayList<>();
+        mDatabase.getReference(path).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    // Extract the topic information from each question
+                    UserCheck topic = userSnapshot.getValue(UserCheck.class);
+                    if (!userChecks.contains(topic)) {
+                        userChecks.add(topic);
+                    }
+                }
+                tcs.setResult(userChecks);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

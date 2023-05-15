@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.project.pbl5_mobile.Model.Entity.CheckNow;
 import com.project.pbl5_mobile.Model.Entity.UserCheck;
 import com.project.pbl5_mobile.R;
 import com.project.pbl5_mobile.databinding.FragmentCameraBinding;
@@ -107,17 +109,17 @@ public class CameraFragment extends Fragment {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] data = baos.toByteArray();
 
-                Socket socket = null;
-                DataOutputStream dos = null;
-                try {
-                    socket = new Socket("192.168.1.15", 9999);
-                    dos = new DataOutputStream(socket.getOutputStream());
-                    dos.write(data);
-                    dos.close();
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                Socket socket = null;
+//                DataOutputStream dos = null;
+//                try {
+//                    socket = new Socket("192.168.1.5", 9999);
+//                    dos = new DataOutputStream(socket.getOutputStream());
+//                    dos.write(data);
+//                    dos.close();
+//                    socket.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
 
                 // đọc ảnh từ tệp và gửi tới Server Python
@@ -137,41 +139,44 @@ public class CameraFragment extends Fragment {
 
 
 
-//                UploadTask uploadTask = mountainsRef.putBytes(data);
-//                uploadTask.addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(getContext(),"Failed!!!",
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//
-//                    String url;
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        taskSnapshot.getMetadata().getReference()
-//                                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                            @Override
-//                            public void onSuccess(Uri downloadUrl) {
-//                                url = downloadUrl.toString();
-//                                // Handle URL here
-//                            }
-//                        });
+                UploadTask uploadTask = mountainsRef.putBytes(data);
+                uploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(),"Failed!!!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                    String url;
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        taskSnapshot.getMetadata().getReference()
+                                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri downloadUrl) {
+                                url = downloadUrl.toString();
+                                // Handle URL here
+                                Toast.makeText(getContext(),"upload successful !!",
+                                        Toast.LENGTH_SHORT).show();
+
+                                binding.imgCamera.setImageBitmap(null);
+
+                                mDatabase = FirebaseDatabase.getInstance();
+                                mDatabase.getReference("check").setValue(true);
+                                CheckNow userCheck = new CheckNow(url,time);
+                                mDatabase.getReference("CheckNow").setValue(userCheck);
+                                Navigation.findNavController(view).navigate(R.id.historyCheckFragment);
+                            }
+                        });
 //                        Task<Uri> uri = mountainsRef.getDownloadUrl();
-//
-//                        Toast.makeText(getContext(),"upload successful !!",
-//                                Toast.LENGTH_SHORT).show();
-//                        binding.imgCamera.setImageBitmap(null);
-//
-//
-//                        mDatabase = FirebaseDatabase.getInstance();
-//                        mDatabase.getReference("check").setValue(true);
-//
-//                        UserCheck userCheck = new UserCheck(url,time);
-//                        mDatabase.getReference("UserCheck").setValue(userCheck);
-//                    }
-//                });
+
+                    }
+                });
+
             }
+
+
         });
 
     }
