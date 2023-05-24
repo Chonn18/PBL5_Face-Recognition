@@ -93,6 +93,21 @@ public class StartFragment extends Fragment {
 //                Student s7 = new Student(103200012,103,"Trần Đình Đạt","3/10/2002",
 //                        "https://firebasestorage.googleapis.com/v0/b/pbl5-c253c.appspot.com/o/anhmau%2Fz4158748908726_23303adb07f1698b3535671716c51c6e.jpg?alt=media&token=9292b65f-4e11-49ee-b92f-c8812f704930","male");
 //                FirebaseStrudents.getInstance().addStudent(s7.getId(),s7);
+//
+//                Student s8 = new Student(103200001,103,"Võ Văn Bảo Quốc","3/10/2002",
+//                        "https://firebasestorage.googleapis.com/v0/b/pbl5-c253c." +
+//                                "appspot.com/o/Untitled.png?alt=media&token=6d53fc9d-3b01-499a-9e75-75eb2de31aee","male");
+//                FirebaseStrudents.getInstance().addStudent(s8.getId(),s8);
+//                Student s9 = new Student(103200002,103,"Dương Văn Chơn","18/9/2002",
+//                        "https://firebasestorage.googleapis.com/v0/b/pbl5-c253c.appspot.com/o/IMG_8319.JPG?alt=media&token=cf6473ac-2176-4c1c-9767-8ece26c66f60","male");
+//                FirebaseStrudents.getInstance().addStudent(s9.getId(),s9);
+//                Student s10 = new Student(103200003,103,"Hoài Nam","1/1/2002",
+//                        "https://firebasestorage.googleapis.com/v0/b/pbl5-c253c.appspot.com/o/anhmau%2FScreenshot%20(8).png?alt=media&token=51d54f7c-7a61-40b7-a59f-303c52e85f37","male");
+//                FirebaseStrudents.getInstance().addStudent(s10.getId(),s10);
+//                Student s11 = new Student(103200004,103,"Trần Tín","1/10/2002",
+//                        "https://firebasestorage.googleapis.com/v0/b/pbl5-c253c.appspot.com/o/anhmau%2FIMG_20230307_173840.jpg?alt=media&token=d5751367-f9c6-40f0-a5e6-6292ba6cecb8","male");
+//                FirebaseStrudents.getInstance().addStudent(s11.getId(),s11);
+
             }
         });
     }

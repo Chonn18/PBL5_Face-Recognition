@@ -202,7 +202,7 @@ public class CameraFragment extends Fragment {
             try {
                 String s = "check";
                 byte[] data = s.getBytes(StandardCharsets.UTF_8);
-                Socket socket = new Socket("10.10.30.11", 9999);
+                Socket socket = new Socket("192.168.1.6", 9999);
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                 dos.write(data);
                 dos.close();

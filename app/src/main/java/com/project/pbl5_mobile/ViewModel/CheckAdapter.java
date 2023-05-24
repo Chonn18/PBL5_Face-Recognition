@@ -33,7 +33,7 @@ public class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.MyViewHolder
     @NonNull
     @Override
     public CheckAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CheckItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.history_item, parent, false);
+        CheckItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.check_item, parent, false);
         return new CheckAdapter.MyViewHolder(binding);
     }
 
@@ -49,14 +49,14 @@ public class CheckAdapter extends RecyclerView.Adapter<CheckAdapter.MyViewHolder
         }
         else holder.binding.tvName.setText(user.getName());
         holder.binding.tvTime.setText(user.getTime());
-        if(!user.getUrlimg().isEmpty())
+        if(user.getUrlimg()!=null)
             Picasso.get().load(user.getUrlimg()).into(holder.binding.ivPerson);
 
         String time1 = user.getTime().substring(0, 8);
 
-        if(checkTime(time1,user.getId()))
-            holder.binding.tvIscheck.setText("Da check in hom nay");
-        else holder.binding.tvIscheck.setText("Chua check in");
+//        if(checkTime(time1,user.getId()))
+//            holder.binding.tvIscheck.setText("Da check in hom nay");
+//        else holder.binding.tvIscheck.setText("Chua check in");
     }
 
     public boolean checkTime(String Text, int id){
