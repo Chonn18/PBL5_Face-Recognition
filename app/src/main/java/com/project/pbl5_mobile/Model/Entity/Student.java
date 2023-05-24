@@ -16,18 +16,18 @@ public class Student implements Parcelable, Serializable {
     private String sex;
 
 
-    public Student(Integer id, Integer time, String name, String date, String avatar, String sex) {
+    public Student(Integer id, Integer idclass, String name, String date, String avatar, String sex) {
         this.id = id;
-        this.idclass = time;
+        this.idclass = idclass;
         this.name = name;
         this.date = date;
         this.avatar = avatar;
         this.sex = sex;
     }
 
-    public Student(Integer id, Integer time, String name, String date, String sex) {
+    public Student(Integer id, Integer idclass, String name, String date, String sex) {
         this.id = id;
-        this.idclass = time;
+        this.idclass = idclass;
         this.name = name;
         this.date = date;
         this.sex = sex;
@@ -45,12 +45,12 @@ public class Student implements Parcelable, Serializable {
         this.id = id;
     }
 
-    public Integer getClassid() {
+    public Integer getidclass() {
         return idclass;
     }
 
-    public void setClassid(Integer classid) {
-        this.idclass = classid;
+    public void setidclass(Integer idclass) {
+        this.idclass = idclass;
     }
 
     public String getName() {

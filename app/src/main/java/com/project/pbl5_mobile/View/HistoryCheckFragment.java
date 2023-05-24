@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +36,7 @@ public class HistoryCheckFragment extends Fragment {
     private FragmentHistoryCheckBinding binding;
     private ArrayList<UserCheck> uList;
     private CheckAdapter historyAdapter;
+    FirebaseDatabase mDatabase;
 
 
     public HistoryCheckFragment() {
@@ -64,6 +66,8 @@ public class HistoryCheckFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mDatabase = FirebaseDatabase.getInstance();
         uList = new ArrayList<>();
         binding.rvHistory.setHasFixedSize(true);
         binding.rvHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -86,13 +90,27 @@ public class HistoryCheckFragment extends Fragment {
     binding.btnBack.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Navigation.findNavController(view).navigate(R.id.homeFragment);
-//            FirebaseDatabase mDatabase;
-//            mDatabase = FirebaseDatabase.getInstance();
-//            mDatabase.getReference("check").setValue(false);
+            Navigation.findNavController(view).navigate(R.id.cameraFragment);
+            mDatabase.getReference("check").setValue(false);
+            UserCheck u = new UserCheck();
+            mDatabase.getReference("UserCheck").setValue(u);
         }
     });
 
+    binding.btnOk.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mDatabase.getReference("check").setValue(false);
+            UserCheck u = new UserCheck();
+            mDatabase.getReference("UserCheck").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
 
+                }
+            });
+
+            Navigation.findNavController(view).navigate(R.id.cameraFragment);
+        }
+    });
     }
 }

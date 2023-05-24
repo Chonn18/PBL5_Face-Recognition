@@ -156,10 +156,16 @@ public void getstudentById(int id, final FirebaseStrudents.StudentCallback callb
 
         }
     });
+
+
 }
 
 
     public interface StudentCallback {
         void onReceived(Student student);
     }
+
+    public void addStudent(int id,Student s){
+        mDatabase.getReference("Student").child(String.valueOf(id)).setValue(s);
     }
+}

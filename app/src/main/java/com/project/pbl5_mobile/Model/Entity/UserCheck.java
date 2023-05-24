@@ -16,13 +16,15 @@ public class UserCheck {
     public UserCheck() {
 
     }
+    public UserCheck(int id) {
+        this.id = id;
+    }
 
-    public UserCheck(String urlimg, String time, Integer id, String name, Boolean ischeck) {
+    public UserCheck(String urlimg, String time, Integer id, String name) {
         this.urlimg = urlimg;
         this.time = time;
         this.id = id;
         this.name = name;
-        this.ischeck = ischeck;
     }
 
     public Integer getId() {

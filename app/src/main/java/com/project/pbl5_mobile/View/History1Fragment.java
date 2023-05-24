@@ -25,6 +25,7 @@ import com.project.pbl5_mobile.databinding.FragmentHistory1Binding;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,6 +84,7 @@ public class History1Fragment extends Fragment {
                 public void onComplete(@NonNull Task<List<User>> task) {
                     if(task.isSuccessful()) {
                         uList.addAll(task.getResult());
+                        Collections.reverse(uList);
                         historyAdapter.notifyDataSetChanged();
                     }
                     else{
@@ -135,6 +137,12 @@ public class History1Fragment extends Fragment {
 //                return;
 //            }
                 if(u.getName().toLowerCase().contains(Text.toLowerCase())){
+                    filterList.add(u);
+                }
+                if(u.getTime().contains(Text)){
+                    filterList.add(u);
+                }
+                if(u.getId().toString().contains(Text)){
                     filterList.add(u);
                 }
             }

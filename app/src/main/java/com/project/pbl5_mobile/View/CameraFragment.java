@@ -23,7 +23,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -78,11 +81,29 @@ public class CameraFragment extends Fragment {
         return binding.getRoot();
     }
 
+    public String getdata(){
+        return "1";
+    }
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabase.getReference("check").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Boolean isChecked = snapshot.getValue(Boolean.class);
+                if(isChecked){
+                    Navigation.findNavController(view).navigate(R.id.historyCheckFragment);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl("gs://pbl5-c253c.appspot.com/check/");
 
@@ -113,34 +134,26 @@ public class CameraFragment extends Fragment {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] data = baos.toByteArray();
 
-//                Socket socket = null;
-//                DataOutputStream dos = null;
-//                try {
-//                    socket = new Socket("192.168.43.209", 9999);
-//                    dos = new DataOutputStream(socket.getOutputStream());
-//                    dos.write(data);
-//                    dos.close();
-//                    socket.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+
+                Thread thread_tmp = new Thread(){
+                    @Override
+                    public void run(){
+                        Socket socket = null;
+                        DataOutputStream dos = null;
+                        byte[] data = getdata().getBytes();
+                        try {
+                            socket = new Socket("192.168.1.13", 9999);
+                            dos = new DataOutputStream(socket.getOutputStream());
+                            dos.write(data);
+                            dos.close();
+                            socket.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                thread_tmp.start();
                 new NetworkTask().execute();
-
-                // đọc ảnh từ tệp và gửi tới Server Python
-//                File file = new File("C:\\Users\\Bao Quoc\\eclipse-workspace\\tmp2\\src\\tmp2\\tmp2.jpg");
-//                FileInputStream fis = new FileInputStream(file);
-//                byte[] buffer = new byte[4096];
-//                int bytesRead = 0;
-//                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-//                while ((bytesRead = fis.read(buffer)) != -1) {
-//                    dos.write(buffer, 0, bytesRead);
-//                }
-
-                // đóng các tài nguyên
-//                fis.close();
-
-
-
 
 
                 UploadTask uploadTask = mountainsRef.putBytes(data);
@@ -167,20 +180,18 @@ public class CameraFragment extends Fragment {
                                 binding.imgCamera.setImageBitmap(null);
 
                                 mDatabase = FirebaseDatabase.getInstance();
-                                mDatabase.getReference("check").setValue(true);
+//                                mDatabase.getReference("check").setValue(true);
                                 CheckNow userCheck = new CheckNow(url,time);
                                 mDatabase.getReference("CheckNow").setValue(userCheck);
+
+
 //                                Navigation.findNavController(view).navigate(R.id.historyCheckFragment);
                             }
                         });
-//                        Task<Uri> uri = mountainsRef.getDownloadUrl();
 
                     }
                 });
-
             }
-
-
         });
 
     }
@@ -231,11 +242,3 @@ public class CameraFragment extends Fragment {
 
 
 
-//    // Trong onClick()
-//    public void onClick(View view) {
-//        // Thực hiện các hoạt động chuẩn bị trước
-//
-//        // Gọi AsyncTask để thực hiện hoạt động mạng
-//        MyAsyncTask myAsyncTask = new MyAsyncTask();
-//        myAsyncTask.execute();
-//    }

@@ -1,12 +1,12 @@
 package com.project.pbl5_mobile.Model.Entity;
 
 public class CheckNow {
-    String time;
     String url;
+    String time;
 
-    public CheckNow(String time, String url) {
-        this.time = time;
+    public CheckNow(String url, String time) {
         this.url = url;
+        this.time = time;
     }
 
     public String getTime() {
