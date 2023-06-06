@@ -65,4 +65,9 @@
         android:name="com.project.pbl5_mobile.View.HistoryCheckFragment"
         android:label="fragment_history_check"
         tools:layout="@layout/fragment_history_check" />
+    <fragment
+        android:id="@+id/camerav2Fragment"
+        android:name="com.project.pbl5_mobile.View.Camerav2Fragment"
+        android:label="fragment_camerav2"
+        tools:layout="@layout/fragment_camerav2" />
 </navigation>

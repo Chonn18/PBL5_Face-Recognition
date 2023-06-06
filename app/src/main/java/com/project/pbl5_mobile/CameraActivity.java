@@ -3,14 +3,21 @@ package com.project.pbl5_mobile;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
 import com.project.pbl5_mobile.databinding.ActivityCameraBinding;
+
+import java.io.IOException;
+import java.util.List;
+
 
 public class CameraActivity extends AppCompatActivity {
 
@@ -25,11 +32,18 @@ public class CameraActivity extends AppCompatActivity {
         binding.btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent,REQUEST_CODE);
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent,REQUEST_CODE);
+//                requestPermission();
+
             }
         });
     }
+
+
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
