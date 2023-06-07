@@ -4,6 +4,8 @@ import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
 import android.Manifest;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.project.pbl5_mobile.R; // Thay thế "appname" bằng tên gói ứng dụng của bạn
 
 import android.content.ContentResolver;
@@ -189,33 +191,55 @@ public class CameraFragment extends Fragment {
                                         mDatabase = FirebaseDatabase.getInstance();
 //                                mDatabase.getReference("check").setValue(true);
                                         CheckNow userCheck = new CheckNow(url,time);
-                                        mDatabase.getReference("CheckNow").setValue(userCheck);
+                                        mDatabase.getReference("CheckNow").setValue(userCheck).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Thread thread_tmp = new Thread(){
+                                                    @Override
+                                                    public void run(){
+                                                        Socket socket = null;
+                                                        DataOutputStream dos = null;
+                                                        byte[] data = getdata().getBytes();
+                                                        try {
+                                                            socket = new Socket("192.168.1.5", 9999);
+                                                            dos = new DataOutputStream(socket.getOutputStream());
+                                                            dos.write(data);
+                                                            dos.close();
+                                                            socket.close();
+                                                        } catch (IOException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                };
+                                                thread_tmp.start();
+                                                new NetworkTask().execute();
+                                            }
+                                        });
                                     }
                                 });
 
+//                        Thread thread_tmp = new Thread(){
+//                            @Override
+//                            public void run(){
+//                                Socket socket = null;
+//                                DataOutputStream dos = null;
+//                                byte[] data = getdata().getBytes();
+//                                try {
+//                                    socket = new Socket("192.168.1.13", 9999);
+//                                    dos = new DataOutputStream(socket.getOutputStream());
+//                                    dos.write(data);
+//                                    dos.close();
+//                                    socket.close();
+//                                } catch (IOException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        };
+//                        thread_tmp.start();
+//                        new NetworkTask().execute();
+
                     }
                 });
-
-                Thread thread_tmp = new Thread(){
-                    @Override
-                    public void run(){
-                        Socket socket = null;
-                        DataOutputStream dos = null;
-                        byte[] data = getdata().getBytes();
-                        try {
-                            socket = new Socket("192.168.1.13", 9999);
-                            dos = new DataOutputStream(socket.getOutputStream());
-                            dos.write(data);
-                            dos.close();
-                            socket.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                thread_tmp.start();
-                new NetworkTask().execute();
-
 
 
             }
@@ -230,7 +254,7 @@ public class CameraFragment extends Fragment {
             try {
                 String s = "check";
                 byte[] data = s.getBytes(StandardCharsets.UTF_8);
-                Socket socket = new Socket("192.168.43.209", 9999);
+                Socket socket = new Socket("192.168.1.5", 9999);
                 DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                 dos.write(data);
                 dos.close();
