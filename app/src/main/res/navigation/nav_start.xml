@@ -45,7 +45,14 @@
         android:id="@+id/classFragment"
         android:name="com.project.pbl5_mobile.View.ClassFragment"
         android:label="fragment_class"
-        tools:layout="@layout/fragment_class" />
+        tools:layout="@layout/fragment_class" >
+        <action
+            android:id="@+id/action_classFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_classFragment_to_history1Fragment"
+            app:destination="@id/history1Fragment" />
+    </fragment>
     <fragment
         android:id="@+id/history1Fragment"
         android:name="com.project.pbl5_mobile.View.History1Fragment"
@@ -64,7 +71,11 @@
         android:id="@+id/historyCheckFragment"
         android:name="com.project.pbl5_mobile.View.HistoryCheckFragment"
         android:label="fragment_history_check"
-        tools:layout="@layout/fragment_history_check" />
+        tools:layout="@layout/fragment_history_check" >
+        <action
+            android:id="@+id/action_historyCheckFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
     <fragment
         android:id="@+id/camerav2Fragment"
         android:name="com.project.pbl5_mobile.View.Camerav2Fragment"

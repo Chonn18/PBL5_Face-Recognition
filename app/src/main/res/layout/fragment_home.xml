@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/textView"
@@ -23,7 +24,6 @@
                 android:text="Class"
                 android:textSize="30sp"
                 android:gravity="center"
-                android:layout_marginLeft="130dp"
                 android:textColor="#2E425A"
                 android:layout_gravity="center"
                 android:textStyle="bold"/>

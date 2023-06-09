@@ -90,7 +90,7 @@ public class HistoryCheckFragment extends Fragment {
     binding.btnBack.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Navigation.findNavController(view).navigate(R.id.cameraFragment);
+            Navigation.findNavController(view).navigate(R.id.homeFragment);
             mDatabase.getReference("check").setValue(false);
             UserCheck u = new UserCheck();
             mDatabase.getReference("UserCheck").setValue(u);

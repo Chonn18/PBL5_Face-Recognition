@@ -63,8 +63,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-//import gun0912.tedbottompicker.TedBottomPicker;
-//import gun0912.tedbottompicker.TedBottomSheetDialogFragment;
 
 
 public class CameraFragment extends Fragment {
@@ -201,7 +199,7 @@ public class CameraFragment extends Fragment {
                                                         DataOutputStream dos = null;
                                                         byte[] data = getdata().getBytes();
                                                         try {
-                                                            socket = new Socket("192.168.1.5", 9999);
+                                                            socket = new Socket("172.20.10.3", 9999);
                                                             dos = new DataOutputStream(socket.getOutputStream());
                                                             dos.write(data);
                                                             dos.close();
@@ -212,7 +210,7 @@ public class CameraFragment extends Fragment {
                                                     }
                                                 };
                                                 thread_tmp.start();
-                                                new NetworkTask().execute();
+//                                                new NetworkTask().execute();
                                             }
                                         });
                                     }
@@ -247,24 +245,24 @@ public class CameraFragment extends Fragment {
 
     }
 
-
-    private class NetworkTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                String s = "check";
-                byte[] data = s.getBytes(StandardCharsets.UTF_8);
-                Socket socket = new Socket("192.168.1.5", 9999);
-                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-                dos.write(data);
-                dos.close();
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
+//
+//    private class NetworkTask extends AsyncTask<Void, Void, Void> {
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//            try {
+//                String s = "check";
+//                byte[] data = s.getBytes(StandardCharsets.UTF_8);
+//                Socket socket = new Socket("172.20.10.3", 9999);
+//                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+//                dos.write(data);
+//                dos.close();
+//                socket.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//    }
 
 
 
