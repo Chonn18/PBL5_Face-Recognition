@@ -20,7 +20,7 @@ git clone https://github.com/Chonn18/PBL5_Face-Recognition.git
 
 ## Authors
 
-[Bao Quoc](https://github.com/quocrainbi)
-[Van Chon](https://github.com/Chonn18)
+- leader [Bao Quoc](https://github.com/quocrainbi)
+- member [Van Chon](https://github.com/Chonn18)
  
 
